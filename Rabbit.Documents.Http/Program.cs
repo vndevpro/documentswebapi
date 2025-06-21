@@ -1,4 +1,6 @@
 
+using Rabbit.Documents.Domain;
+
 namespace Rabbit.Documents.Http
 {
     public class Program
@@ -24,6 +26,17 @@ namespace Rabbit.Documents.Http
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+
+            app.MapGet("/documents", () =>
+            {
+                return Results.Ok(new Document[]
+                    {
+                        new Document { Id = Guid.NewGuid(), Title = "Document 1", Description = "Description 1",
+                            CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+                        new Document { Id = Guid.NewGuid(), Title = "Document 2", Description = "Description 2",
+                            CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
+                    });
+            });
 
             app.Run();
         }
