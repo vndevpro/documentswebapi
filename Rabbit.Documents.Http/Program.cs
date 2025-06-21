@@ -1,5 +1,4 @@
-
-using Rabbit.Documents.Domain;
+using Rabbit.Documents.Http.Endpoints;
 
 namespace Rabbit.Documents.Http
 {
@@ -27,16 +26,7 @@ namespace Rabbit.Documents.Http
 
             app.UseAuthorization();
 
-            app.MapGet("/documents", () =>
-            {
-                return Results.Ok(new Document[]
-                    {
-                        new Document { Id = Guid.NewGuid(), Title = "Document 1", Description = "Description 1",
-                            CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
-                        new Document { Id = Guid.NewGuid(), Title = "Document 2", Description = "Description 2",
-                            CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
-                    });
-            });
+            app.MapDocumentsEndpoints();
 
             app.Run();
         }
