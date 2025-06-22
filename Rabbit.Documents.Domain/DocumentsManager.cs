@@ -49,13 +49,14 @@
 
         public Document Add(Document document)
         {
-            if (document.Id == Guid.Empty)
-            {
-                document.Id = Guid.NewGuid();
-            }
-
             _documents.Add(document);
 
+            return document;
+        }
+
+        public Document Update(Guid id, Document document)
+        {
+            // DO NOTHING HERE
             return document;
         }
     }

@@ -1,7 +1,6 @@
 ﻿using Rabbit.Documents.Application.Commands;
 using Rabbit.Documents.Application.Extensions;
 using Rabbit.Documents.Domain;
-using System.ComponentModel.DataAnnotations;
 
 namespace Rabbit.Documents.Http.Endpoints
 {
@@ -9,28 +8,37 @@ namespace Rabbit.Documents.Http.Endpoints
     {
         public static void MapDocumentsEndpoints(this IEndpointRouteBuilder app)
         {
-            app.MapGet("/documents", () =>
+            var apiV1 = app.MapGroup("/api/v1").AddEndpointFilter<DataAnnotationsValidationFilter>();
+
+            apiV1.MapGet("/documents", () =>
             {
                 return Results.Ok(DocumentsManager.Instance.GetAll());
             });
 
-            app.MapGet("/documents/{id:guid}", (Guid id) =>
+            apiV1.MapGet("/documents/{id:guid}", (Guid id) =>
             {
                 var entity = DocumentsManager.Instance.Get(id);
                 return entity == null ? Results.NotFound(entity) : Results.Ok(entity);
             });
 
-            app.MapPost("/documents", (CreateDocumentInputModel documentInputModel) =>
+            apiV1.MapPost("/documents", (CreateDocumentInputModel documentInputModel) =>
             {
-                var results = new List<ValidationResult>();
-                var validationContext = new ValidationContext(documentInputModel);
-                if (!Validator.TryValidateObject(documentInputModel, validationContext, results, true))
-                {
-                    return Results.BadRequest(results);
-                }
-
                 var createdEntity = DocumentsManager.Instance.Add(documentInputModel.ToDocument());
                 return Results.Created($"/documents/{createdEntity.Id}", createdEntity);
+            });
+
+            apiV1.MapPatch("/documents/{id:guid}", (Guid id, UpdateDocumentInputModel documentInputModel) =>
+            {
+                var existingEntity = DocumentsManager.Instance.Get(id);
+                if (existingEntity == null)
+                {
+                    return Results.NotFound($"Document with ID {id} not found.");
+                }
+
+                existingEntity.GetValuesFromInputModel(documentInputModel);
+                var updatedEntity = DocumentsManager.Instance.Update(id, existingEntity);
+
+                return Results.Ok(updatedEntity);
             });
         }
     }

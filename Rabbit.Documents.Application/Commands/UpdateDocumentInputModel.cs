@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Rabbit.Documents.Application.Commands
 {
-    public class CreateDocumentInputModel: IValidationRequired
+    public class UpdateDocumentInputModel : IValidationRequired
     {
         [Required]
         [StringLength(128, MinimumLength = 3)]
