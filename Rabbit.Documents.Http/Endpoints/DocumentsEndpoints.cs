@@ -1,4 +1,6 @@
-﻿using Rabbit.Documents.Domain;
+﻿using Rabbit.Documents.Application.Commands;
+using Rabbit.Documents.Application.Extensions;
+using Rabbit.Documents.Domain;
 
 namespace Rabbit.Documents.Http.Endpoints
 {
@@ -17,10 +19,10 @@ namespace Rabbit.Documents.Http.Endpoints
                 return entity == null ? Results.NotFound(entity) : Results.Ok(entity);
             });
 
-            app.MapPost("/documents", (Document document) =>
+            app.MapPost("/documents", (CreateDocumentInputModel documentInputModel) =>
             {
-                var entity = DocumentsManager.Instance.Add(document);
-                return Results.Created($"/documents/{entity.Id}", entity);
+                var createdEntity = DocumentsManager.Instance.Add(documentInputModel.ToDocument());
+                return Results.Created($"/documents/{createdEntity.Id}", createdEntity);
             });
         }
     }

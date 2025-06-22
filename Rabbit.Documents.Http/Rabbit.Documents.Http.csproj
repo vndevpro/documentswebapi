@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Rabbit.Documents.Application\Rabbit.Documents.Application.csproj" />
     <ProjectReference Include="..\Rabbit.Documents.Domain\Rabbit.Documents.Domain.csproj" />
   </ItemGroup>
 
