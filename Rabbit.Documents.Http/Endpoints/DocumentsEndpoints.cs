@@ -1,6 +1,7 @@
 ﻿using Rabbit.Documents.Application.Commands;
 using Rabbit.Documents.Application.Extensions;
 using Rabbit.Documents.Domain;
+using System.ComponentModel.DataAnnotations;
 
 namespace Rabbit.Documents.Http.Endpoints
 {
@@ -21,6 +22,13 @@ namespace Rabbit.Documents.Http.Endpoints
 
             app.MapPost("/documents", (CreateDocumentInputModel documentInputModel) =>
             {
+                var results = new List<ValidationResult>();
+                var validationContext = new ValidationContext(documentInputModel);
+                if (!Validator.TryValidateObject(documentInputModel, validationContext, results, true))
+                {
+                    return Results.BadRequest(results);
+                }
+
                 var createdEntity = DocumentsManager.Instance.Add(documentInputModel.ToDocument());
                 return Results.Created($"/documents/{createdEntity.Id}", createdEntity);
             });

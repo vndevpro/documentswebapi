@@ -1,8 +1,12 @@
-﻿namespace Rabbit.Documents.Application.Commands
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Rabbit.Documents.Application.Commands
 {
     public class CreateDocumentInputModel
     {
-        public required string Title { get; set; }
+        [Required]
+        [StringLength(128, MinimumLength = 3)]
+        public string Title { get; set; } = string.Empty;
 
         public string? Description { get; set; }
     }
