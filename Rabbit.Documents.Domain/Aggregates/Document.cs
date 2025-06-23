@@ -1,6 +1,6 @@
-﻿namespace Rabbit.Documents.Domain
+﻿namespace Rabbit.Documents.Domain.Entities
 {
-    public class Document
+    public class Document : IAggregate<Guid>
     {
         public Guid Id { get; init; }
 
@@ -8,7 +8,7 @@
 
         public string? Description { get; set; }
 
-        public DateTime CreatedAt { get; init ; }
+        public DateTime CreatedAt { get; init; }
 
         public DateTime UpdatedAt { get; set; }
 

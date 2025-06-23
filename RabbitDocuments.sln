@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabbit.Documents.Domain", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabbit.Documents.Application", "Rabbit.Documents.Application\Rabbit.Documents.Application.csproj", "{8DFF65CF-FA65-C651-4339-1703B2FFB65A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabbit.Documents.DataRavenDb", "Rabbit.Documents.DataRavenDb\Rabbit.Documents.DataRavenDb.csproj", "{AD3CBABF-C7B6-E8C7-6D69-2C1033AD9ADD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,9 +31,16 @@ Global
 		{8DFF65CF-FA65-C651-4339-1703B2FFB65A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DFF65CF-FA65-C651-4339-1703B2FFB65A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DFF65CF-FA65-C651-4339-1703B2FFB65A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD3CBABF-C7B6-E8C7-6D69-2C1033AD9ADD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD3CBABF-C7B6-E8C7-6D69-2C1033AD9ADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD3CBABF-C7B6-E8C7-6D69-2C1033AD9ADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD3CBABF-C7B6-E8C7-6D69-2C1033AD9ADD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AD3CBABF-C7B6-E8C7-6D69-2C1033AD9ADD} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4AC8B1E9-3B5A-47DA-95E8-8B61EE364365}

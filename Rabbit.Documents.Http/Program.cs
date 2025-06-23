@@ -26,7 +26,7 @@ namespace Rabbit.Documents.Http
 
             app.UseAuthorization();
 
-            app.MapDocumentsEndpoints();
+            app.MapApiV1Endpoints();
 
             app.Run();
         }

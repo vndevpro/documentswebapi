@@ -1,5 +1,4 @@
-﻿using Rabbit.Documents.Application.Validations;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Rabbit.Documents.Application.Validations
 {

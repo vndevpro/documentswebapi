@@ -1,6 +1,6 @@
 ﻿using Rabbit.Documents.Application.Validations;
 
-namespace Rabbit.Documents.Http.Endpoints
+namespace Rabbit.Documents.Http.Validations
 {
     public class DataAnnotationsValidationFilter : IEndpointFilter
     {

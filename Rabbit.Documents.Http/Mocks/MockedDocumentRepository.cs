@@ -1,12 +1,15 @@
-﻿namespace Rabbit.Documents.Domain
+﻿using Rabbit.Documents.Domain.Entities;
+using Rabbit.Documents.Domain.Repositories;
+
+namespace Rabbit.Documents.Http.Mocks
 {
-    public class DocumentsManager : IDocumentsManager
+    public class MockedDocumentRepository : IDocumentRepository
     {
         private readonly List<Document> _documents = [];
 
-        public static DocumentsManager Instance { get; } = new DocumentsManager();
+        public static IDocumentRepository Instance { get; } = new MockedDocumentRepository();
 
-        private DocumentsManager()
+        private MockedDocumentRepository()
         {
             _documents.AddRange(
                 new Document
@@ -37,27 +40,27 @@
             }
         }
 
-        public Document? Get(Guid id)
+        public Document? GetById(Guid id)
         {
             return _documents.FirstOrDefault(d => d.Id == id);
         }
 
-        public IEnumerable<Document> GetAll()
-        {
-            return _documents;
-        }
-
-        public Document Add(Document document)
+        public Document Create(Document document)
         {
             _documents.Add(document);
 
             return document;
         }
 
-        public Document Update(Guid id, Document document)
+        public IEnumerable<Document> GetAll(int? page, int? pageSize)
         {
-            // DO NOTHING HERE
-            return document;
+            return _documents;
+        }
+
+        public Document Update(Document aggregate)
+        {
+            // DO NOTHING
+            return aggregate;
         }
     }
 }
