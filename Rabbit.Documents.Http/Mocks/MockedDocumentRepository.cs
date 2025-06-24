@@ -3,7 +3,7 @@ using Rabbit.Documents.Domain.Repositories;
 
 namespace Rabbit.Documents.Http.Mocks
 {
-    public class MockedDocumentRepository : IDocumentRepository
+    public class MockedDocumentRepository : RepositoryBase<Document, string>, IDocumentRepository
     {
         private readonly List<Document> _documents = [];
 
@@ -14,7 +14,7 @@ namespace Rabbit.Documents.Http.Mocks
             _documents.AddRange(
                 new Document
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString(),
                     Title = "Document 1",
                     Description = "Description 1",
                     CreatedAt = DateTime.UtcNow,
@@ -22,7 +22,7 @@ namespace Rabbit.Documents.Http.Mocks
                 },
                 new Document
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString(),
                     Title = "Document 2",
                     Description = "Description 2",
                     CreatedAt = DateTime.UtcNow,
@@ -31,36 +31,39 @@ namespace Rabbit.Documents.Http.Mocks
             );
         }
 
-        public void Delete(Guid id)
+        public override Task DeleteAsync(string id)
         {
             var document = _documents.FirstOrDefault(d => d.Id == id);
+
             if (document != null)
             {
                 _documents.Remove(document);
             }
+
+            return Task.CompletedTask;
         }
 
-        public Document? GetById(Guid id)
+        public override Task<Document?> GetByIdAsync(string id)
         {
-            return _documents.FirstOrDefault(d => d.Id == id);
+            var document = _documents.FirstOrDefault(d => d.Id == id);
+            return Task.FromResult(document);
         }
 
-        public Document Create(Document document)
+        public override Task<Document> CreateOrUpdateAsync(Document document)
         {
-            _documents.Add(document);
+            var existingDocument = _documents.FirstOrDefault(d => d.Id == document.Id);
 
-            return document;
+            if (existingDocument == null)
+            {
+                _documents.Add(document);
+            }
+
+            return Task.FromResult(document);
         }
 
-        public IEnumerable<Document> GetAll(int? page, int? pageSize)
+        public override Task<IEnumerable<Document>> GetAllAsync(int? page, int? pageSize)
         {
-            return _documents;
-        }
-
-        public Document Update(Document aggregate)
-        {
-            // DO NOTHING
-            return aggregate;
+            return Task.FromResult(_documents.AsEnumerable());
         }
     }
 }

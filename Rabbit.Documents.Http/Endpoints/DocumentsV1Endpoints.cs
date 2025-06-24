@@ -1,6 +1,6 @@
 ﻿using Rabbit.Documents.Application.Commands;
 using Rabbit.Documents.Application.Extensions;
-using Rabbit.Documents.Http.Mocks;
+using Rabbit.Documents.Domain.Repositories;
 
 namespace Rabbit.Documents.Http.Endpoints
 {
@@ -8,33 +8,33 @@ namespace Rabbit.Documents.Http.Endpoints
     {
         public static void MapDocumentsEndpoints(this IEndpointRouteBuilder routeBuilder)
         {
-            routeBuilder.MapGet("/documents", () =>
+            routeBuilder.MapGet("/documents", (IDocumentRepository documentRepository) =>
             {
-                return Results.Ok(MockedDocumentRepository.Instance.GetAll(null, null));
+                return Results.Ok(documentRepository.GetAll(null, null));
             });
 
-            routeBuilder.MapGet("/documents/{id:guid}", (Guid id) =>
+            routeBuilder.MapGet("/documents/{id:guid}", (IDocumentRepository documentRepository, string id) =>
             {
-                var entity = MockedDocumentRepository.Instance.GetById(id);
+                var entity = documentRepository.GetById(id);
                 return entity == null ? Results.NotFound(entity) : Results.Ok(entity);
             });
 
-            routeBuilder.MapPost("/documents", (CreateDocumentInputModel documentInputModel) =>
+            routeBuilder.MapPost("/documents", (IDocumentRepository documentRepository, CreateDocumentInputModel documentInputModel) =>
             {
-                var createdEntity = MockedDocumentRepository.Instance.Create(documentInputModel.ToDocument());
+                var createdEntity = documentRepository.CreateOrUpdate(documentInputModel.ToDocument());
                 return Results.Created($"/documents/{createdEntity.Id}", createdEntity);
             });
 
-            routeBuilder.MapPatch("/documents/{id:guid}", (Guid id, UpdateDocumentInputModel documentInputModel) =>
+            routeBuilder.MapPatch("/documents/{id:guid}", (IDocumentRepository documentRepository, string id, UpdateDocumentInputModel documentInputModel) =>
             {
-                var existingEntity = MockedDocumentRepository.Instance.GetById(id);
+                var existingEntity = documentRepository.GetById(id);
                 if (existingEntity == null)
                 {
                     return Results.NotFound($"Document with ID {id} not found.");
                 }
 
                 existingEntity.GetValuesFromInputModel(documentInputModel);
-                var updatedEntity = MockedDocumentRepository.Instance.Update(existingEntity);
+                var updatedEntity = documentRepository.CreateOrUpdate(existingEntity);
 
                 return Results.Ok(updatedEntity);
             });

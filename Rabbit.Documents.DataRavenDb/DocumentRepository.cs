@@ -1,33 +1,36 @@
 ﻿using Rabbit.Documents.Domain.Entities;
 using Rabbit.Documents.Domain.Repositories;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
 
 namespace Rabbit.Documents.RavenDbData
 {
-    public class DocumentRepository : IDocumentRepository
+    public class DocumentRepository(IAsyncDocumentSession documentSession) : RepositoryBase<Document, string>, IDocumentRepository
     {
-        public IEnumerable<Document> GetAll(int? page, int? pageSize)
+        public override async Task<Document> CreateOrUpdateAsync(Document aggregate)
         {
-            throw new NotImplementedException();
+            await documentSession.StoreAsync(aggregate, aggregate.Id);
+            await documentSession.SaveChangesAsync();
+            return aggregate;
         }
 
-        public Document? GetById(Guid id)
+        public override async Task DeleteAsync(string id)
         {
-            throw new NotImplementedException();
+            documentSession.Delete(id.ToString());
+            await documentSession.SaveChangesAsync();
         }
 
-        public Document Create(Document aggregate)
+        public override async Task<IEnumerable<Document>> GetAllAsync(int? page, int? pageSize)
         {
-            throw new NotImplementedException();
+            return await documentSession.Query<Document>()
+                .Skip(page.GetValueOrDefault(0) * pageSize.GetValueOrDefault(10))
+                .Take(pageSize.GetValueOrDefault(10))
+                .ToListAsync();
         }
 
-        public void Delete(Guid id)
+        public override async Task<Document?> GetByIdAsync(string id)
         {
-            throw new NotImplementedException();
-        }
-        
-        public Document Update(Document aggregate)
-        {
-            throw new NotImplementedException();
+            return await documentSession.LoadAsync<Document>(id);
         }
     }
 }

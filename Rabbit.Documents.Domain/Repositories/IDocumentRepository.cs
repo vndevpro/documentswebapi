@@ -2,7 +2,7 @@
 
 namespace Rabbit.Documents.Domain.Repositories
 {
-    public interface IDocumentRepository : IRepository<Document, Guid>
+    public interface IDocumentRepository : IRepositoryAsync<Document, string>
     {
     }
 }

@@ -1,3 +1,4 @@
+using Rabbit.Documents.Http.Configurations;
 using Rabbit.Documents.Http.Endpoints;
 
 namespace Rabbit.Documents.Http
@@ -13,6 +14,12 @@ namespace Rabbit.Documents.Http
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
+            // Create and configure the document store
+            builder.ConfigRavenDb();
+
+            // Configure application services
+            builder.ConfigApplicationServices();
 
             var app = builder.Build();
 

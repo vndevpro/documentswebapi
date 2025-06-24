@@ -10,10 +10,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
+    <PackageReference Include="RavenDB.Client" Version="7.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Rabbit.Documents.Application\Rabbit.Documents.Application.csproj" />
+    <ProjectReference Include="..\Rabbit.Documents.DataRavenDb\Rabbit.Documents.DataRavenDb.csproj" />
     <ProjectReference Include="..\Rabbit.Documents.Domain\Rabbit.Documents.Domain.csproj" />
   </ItemGroup>
 

@@ -2,11 +2,9 @@
 
 namespace Rabbit.Documents.Domain.Repositories
 {
-    public interface IRepository<TAggregate, TId> where TAggregate : IAggregate<TId>
+    public interface IRepository<TAggregate, TId> : IRepository where TAggregate : IAggregate<TId>
     {
-        TAggregate Create(TAggregate aggregate);
-
-        TAggregate Update(TAggregate aggregate);
+        TAggregate CreateOrUpdate(TAggregate aggregate);
 
         void Delete(TId id);
 
@@ -17,6 +15,5 @@ namespace Rabbit.Documents.Domain.Repositories
 
     public interface IRepository
     {
-
     }
 }

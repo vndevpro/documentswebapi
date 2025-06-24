@@ -1,8 +1,8 @@
 ﻿namespace Rabbit.Documents.Domain.Entities
 {
-    public class Document : IAggregate<Guid>
+    public class Document : IAggregate<string>
     {
-        public Guid Id { get; init; }
+        public string Id { get; init; } = default!;
 
         public required string Title { get; set; }
 
@@ -16,7 +16,7 @@
         {
             return new Document
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 Title = title,
                 Description = description,
                 CreatedAt = DateTime.UtcNow,

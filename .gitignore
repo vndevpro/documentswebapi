@@ -415,3 +415,5 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+/free.rabbitcorp.client.certificate.zip
+/free.rabbitcorp.client.certificate
