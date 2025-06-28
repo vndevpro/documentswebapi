@@ -1,7 +1,7 @@
 ﻿using GdNetValidations;
 using System.ComponentModel.DataAnnotations;
 
-namespace Rabbit.Documents.Application.Commands
+namespace Rabbit.Documents.Application.InputModels
 {
     public class UpdateDocumentInputModel : IValidationRequired
     {

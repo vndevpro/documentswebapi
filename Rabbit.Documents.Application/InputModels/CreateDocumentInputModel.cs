@@ -1,9 +1,9 @@
 ﻿using GdNetValidations;
 using System.ComponentModel.DataAnnotations;
 
-namespace Rabbit.Documents.Application.Commands
+namespace Rabbit.Documents.Application.InputModels
 {
-    public class CreateDocumentInputModel: IValidationRequired
+    public class CreateDocumentInputModel : IValidationRequired
     {
         [Required]
         [StringLength(128, MinimumLength = 3)]

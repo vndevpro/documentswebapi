@@ -8,6 +8,7 @@ namespace Rabbit.Documents.Infrastructure.Configurations
     {
         public static void ConfigApplicationServices(this IServiceCollection services)
         {
+            services.ConfigMediatR();
             services.ConfigRepositories();
         }
 

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GdNetDDD.Common;
+using GdNetValidations;
+using MediatR;
+using Rabbit.Documents.Application.ViewModels;
 
 namespace Rabbit.Documents.Application.Queries
 {
-    public class GetDocumentsQuery
+    public class GetDocumentsQuery : IRequest<PaginatedResult<DocumentViewModel>>
     {
+        public required PaginationInputModel InputModel { get; set; }
     }
 }

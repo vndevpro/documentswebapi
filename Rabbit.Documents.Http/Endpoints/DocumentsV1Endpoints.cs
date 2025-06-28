@@ -1,6 +1,8 @@
-﻿using Rabbit.Documents.Application.Commands;
-using Rabbit.Documents.Application.Extensions;
-using Rabbit.Documents.Domain.Repositories;
+﻿using GdNetValidations;
+using MediatR;
+using Rabbit.Documents.Application.Commands;
+using Rabbit.Documents.Application.InputModels;
+using Rabbit.Documents.Application.Queries;
 
 namespace Rabbit.Documents.Http.Endpoints
 {
@@ -8,35 +10,28 @@ namespace Rabbit.Documents.Http.Endpoints
     {
         public static void MapDocumentsEndpoints(this IEndpointRouteBuilder routeBuilder)
         {
-            routeBuilder.MapGet("/documents", (IDocumentRepository documentRepository, int page, int pageSize) =>
+            routeBuilder.MapGet("/documents", async (IMediator mediator, [AsParameters] PaginationInputModel model) =>
             {
-                return Results.Ok(documentRepository.GetList(page, pageSize));
+                var documents = await mediator.Send(new GetDocumentsQuery { InputModel = model });
+                return Results.Ok(documents);
             });
 
-            routeBuilder.MapGet("/documents/{id:guid}", (IDocumentRepository documentRepository, string id) =>
+            routeBuilder.MapGet("/documents/{id:guid}", async (IMediator mediator, Guid id) =>
             {
-                var entity = documentRepository.GetById(id);
-                return entity == null ? Results.NotFound(entity) : Results.Ok(entity);
+                var document = await mediator.Send(new GetDocumentByIdQuery { Id = id });
+                return document == null ? Results.NotFound(document) : Results.Ok(document);
             });
 
-            routeBuilder.MapPost("/documents", (IDocumentRepository documentRepository, CreateDocumentInputModel documentInputModel) =>
+            routeBuilder.MapPost("/documents", async (IMediator mediator, CreateDocumentInputModel model) =>
             {
-                var createdEntity = documentRepository.CreateOrUpdate(documentInputModel.ToDocument());
-                return Results.Created($"/documents/{createdEntity.Id}", createdEntity);
+                var document = await mediator.Send(new CreateDocumentCommand { InputModel = model });
+                return Results.Created($"/documents/{document.Id}", document);
             });
 
-            routeBuilder.MapPatch("/documents/{id:guid}", (IDocumentRepository documentRepository, string id, UpdateDocumentInputModel documentInputModel) =>
+            routeBuilder.MapPatch("/documents/{id:guid}", async (IMediator mediator, Guid id, UpdateDocumentInputModel model) =>
             {
-                var existingEntity = documentRepository.GetById(id);
-                if (existingEntity == null)
-                {
-                    return Results.NotFound($"Document with ID {id} not found.");
-                }
-
-                existingEntity.GetValuesFromInputModel(documentInputModel);
-                var updatedEntity = documentRepository.CreateOrUpdate(existingEntity);
-
-                return Results.Ok(updatedEntity);
+                var document = await mediator.Send(new UpdateDocumentCommand(id, model));
+                return Results.Ok(document);
             });
         }
     }

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.6" />
@@ -15,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GdNetDataStoreRavenDb\GdNetDataStoreRavenDb.csproj" />
     <ProjectReference Include="..\GdNetValidations\GdNetValidations.csproj" />
+    <ProjectReference Include="..\Rabbit.Documents.Application\Rabbit.Documents.Application.csproj" />
     <ProjectReference Include="..\Rabbit.Documents.DataRavenDb\Rabbit.Documents.DataRavenDb.csproj" />
     <ProjectReference Include="..\Rabbit.Documents.Domain\Rabbit.Documents.Domain.csproj" />
   </ItemGroup>

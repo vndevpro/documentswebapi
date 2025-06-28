@@ -1,9 +1,9 @@
-﻿using Rabbit.Documents.Application.Commands;
+﻿using Rabbit.Documents.Application.InputModels;
 using Rabbit.Documents.Domain.Entities;
 
 namespace Rabbit.Documents.Application.Extensions
 {
-    public static class DocumentInputModelsExtensions
+    public static class DocumentMapper
     {
         public static Document ToDocument(this CreateDocumentInputModel inputModel)
         {
