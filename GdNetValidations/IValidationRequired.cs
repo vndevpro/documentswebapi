@@ -1,4 +1,4 @@
-﻿namespace Rabbit.Documents.Application.Validations
+﻿namespace GdNetValidations
 {
     public interface IValidationRequired
     {

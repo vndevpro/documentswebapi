@@ -1,4 +1,4 @@
-﻿using Rabbit.Documents.Application.Validations;
+﻿using GdNetValidations;
 using System.ComponentModel.DataAnnotations;
 
 namespace Rabbit.Documents.Application.Commands

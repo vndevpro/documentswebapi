@@ -1,4 +1,6 @@
-﻿namespace Rabbit.Documents.Http.Configurations
+﻿using Microsoft.Extensions.Configuration;
+
+namespace Rabbit.Documents.Infrastructure.Configurations
 {
     public static class ConfigurationExtensions
     {

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GdNetDDD\GdNetDDD.csproj" />
+    <ProjectReference Include="..\Rabbit.Documents.Domain\Rabbit.Documents.Domain.csproj" />
   </ItemGroup>
 
 </Project>

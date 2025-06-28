@@ -1,4 +1,4 @@
-﻿using Rabbit.Documents.Application.Validations;
+﻿using GdNetValidations;
 
 namespace Rabbit.Documents.Http.Validations
 {

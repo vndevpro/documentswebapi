@@ -1,8 +1,8 @@
-﻿namespace Rabbit.Documents.Domain.Entities
+﻿namespace GdNetDDD.Entities
 {
     public interface IEntity<TId> : IEntity
     {
-        TId Id { get; init; }
+        TId Id { get; }
     }
 
     public interface IEntity

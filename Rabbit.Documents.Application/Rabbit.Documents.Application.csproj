@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GdNetValidations\GdNetValidations.csproj" />
     <ProjectReference Include="..\Rabbit.Documents.Domain\Rabbit.Documents.Domain.csproj" />
   </ItemGroup>
 

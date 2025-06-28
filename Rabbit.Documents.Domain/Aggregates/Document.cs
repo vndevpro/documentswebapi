@@ -1,4 +1,6 @@
-﻿namespace Rabbit.Documents.Domain.Entities
+﻿using GdNetDDD.Entities;
+
+namespace Rabbit.Documents.Domain.Entities
 {
     public class Document : IAggregate<string>
     {

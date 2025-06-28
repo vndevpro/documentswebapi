@@ -1,4 +1,6 @@
-﻿using Rabbit.Documents.Domain.Entities;
+﻿using GdNetDDD.Common;
+using GdNetDDD.Repositories;
+using Rabbit.Documents.Domain.Entities;
 using Rabbit.Documents.Domain.Repositories;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
@@ -28,9 +30,23 @@ namespace Rabbit.Documents.RavenDbData
                 .ToListAsync();
         }
 
-        public override async Task<Document?> GetByIdAsync(string id)
+        public override async Task<Document> GetByIdAsync(string id)
         {
             return await documentSession.LoadAsync<Document>(id);
+        }
+
+        public override async Task<PaginatedList<Document>> GetListAsync(int? page, int? pageSize)
+        {
+            var aPage = page.GetValueOrDefault(0);
+            var aPageSize = pageSize.GetValueOrDefault(10);
+
+            var documents = await documentSession.Query<Document>()
+                .Statistics(out var stats)
+                .Skip(aPage * aPageSize)
+                .Take(aPageSize)
+                .ToListAsync();
+
+            return PaginatedList<Document>.Create(documents, stats.TotalResults, aPage, aPageSize);
         }
     }
 }

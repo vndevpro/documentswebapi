@@ -1,4 +1,4 @@
-﻿namespace Rabbit.Documents.Http.Configurations
+﻿namespace GdNetDataStoreRavenDb
 {
     public class RavenDbSettings
     {

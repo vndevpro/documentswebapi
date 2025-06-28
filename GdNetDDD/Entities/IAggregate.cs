@@ -1,4 +1,4 @@
-﻿namespace Rabbit.Documents.Domain.Entities
+﻿namespace GdNetDDD.Entities
 {
     public interface IAggregate<TId> : IAggregate, IEntity<TId>
     {

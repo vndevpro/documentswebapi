@@ -1,7 +1,7 @@
 ﻿using Raven.Client.Documents;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Rabbit.Documents.Http.Configurations
+namespace GdNetDataStoreRavenDb
 {
     public static class DocumentStoreFactory
     {

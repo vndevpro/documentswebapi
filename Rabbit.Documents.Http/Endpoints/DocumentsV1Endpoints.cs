@@ -8,9 +8,9 @@ namespace Rabbit.Documents.Http.Endpoints
     {
         public static void MapDocumentsEndpoints(this IEndpointRouteBuilder routeBuilder)
         {
-            routeBuilder.MapGet("/documents", (IDocumentRepository documentRepository) =>
+            routeBuilder.MapGet("/documents", (IDocumentRepository documentRepository, int page, int pageSize) =>
             {
-                return Results.Ok(documentRepository.GetAll(null, null));
+                return Results.Ok(documentRepository.GetList(page, pageSize));
             });
 
             routeBuilder.MapGet("/documents/{id:guid}", (IDocumentRepository documentRepository, string id) =>

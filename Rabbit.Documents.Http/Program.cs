@@ -1,5 +1,5 @@
-using Rabbit.Documents.Http.Configurations;
 using Rabbit.Documents.Http.Endpoints;
+using Rabbit.Documents.Infrastructure.Configurations;
 
 namespace Rabbit.Documents.Http
 {
@@ -16,10 +16,10 @@ namespace Rabbit.Documents.Http
             builder.Services.AddOpenApi();
 
             // Create and configure the document store
-            builder.ConfigRavenDb();
+            builder.Services.ConfigRavenDb(builder.Configuration);
 
             // Configure application services
-            builder.ConfigApplicationServices();
+            builder.Services.ConfigApplicationServices();
 
             var app = builder.Build();
 
