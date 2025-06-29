@@ -1,8 +1,10 @@
 ﻿using GdNetDDD.Common;
 using GdNetDDD.Repositories;
+using Rabbit.Documents.DataRavenDb.Indexes;
 using Rabbit.Documents.Domain.Entities;
 using Rabbit.Documents.Domain.Repositories;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Queries;
 using Raven.Client.Documents.Session;
 
 namespace Rabbit.Documents.RavenDbData
@@ -41,6 +43,22 @@ namespace Rabbit.Documents.RavenDbData
             var aPageSize = pageSize.GetValueOrDefault(10);
 
             var documents = await documentSession.Query<Document>()
+                .Statistics(out var stats)
+                .Skip(aPage * aPageSize)
+                .Take(aPageSize)
+                .ToListAsync();
+
+            return PaginatedList<Document>.Create(documents, stats.TotalResults, aPage, aPageSize);
+        }
+
+        public async Task<PaginatedList<Document>> Search(string searchTerms, int? page, int? pageSize)
+        {
+            var aPage = page.GetValueOrDefault(0);
+            var aPageSize = pageSize.GetValueOrDefault(10);
+
+            var documents = await documentSession.Query<Document, AllDocumentsIndex>()
+                .Search(x => x.Title, searchTerms, @operator: SearchOperator.And)
+                .Search(x => x.Description, searchTerms, @operator: SearchOperator.And)
                 .Statistics(out var stats)
                 .Skip(aPage * aPageSize)
                 .Take(aPageSize)

@@ -56,7 +56,25 @@ namespace Rabbit.Documents.DataMocks
             var aPage = page.GetValueOrDefault(0);
             var aPageSize = pageSize.GetValueOrDefault(10);
 
-            var pagedDocuments = _documents.Skip(aPage * aPageSize).Take(aPageSize).ToList();
+            var pagedDocuments = _documents.Skip(aPage * aPageSize)
+                .Take(aPageSize)
+                .ToList();
+            var pl = PaginatedList<Document>.Create(pagedDocuments, _documents.Count, aPage, aPageSize);
+
+            return Task.FromResult(pl);
+        }
+
+        public Task<PaginatedList<Document>> Search(string searchTerms, int? page, int? pageSize)
+        {
+            var aPage = page.GetValueOrDefault(0);
+            var aPageSize = pageSize.GetValueOrDefault(10);
+
+            var pagedDocuments = _documents
+                .Where(x => x.Title.Contains(searchTerms)
+                            || (x.Description ?? string.Empty).Contains(searchTerms))
+                .Skip(aPage * aPageSize)
+                .Take(aPageSize)
+                .ToList();
             var pl = PaginatedList<Document>.Create(pagedDocuments, _documents.Count, aPage, aPageSize);
 
             return Task.FromResult(pl);

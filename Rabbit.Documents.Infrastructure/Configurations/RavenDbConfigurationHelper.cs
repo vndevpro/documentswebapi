@@ -1,7 +1,9 @@
 ﻿using GdNetDataStoreRavenDb;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Rabbit.Documents.DataRavenDb.Indexes;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Indexes;
 
 namespace Rabbit.Documents.Infrastructure.Configurations
 {
@@ -19,8 +21,9 @@ namespace Rabbit.Documents.Infrastructure.Configurations
             var store = DocumentStoreFactory.CreateStore(settings);
 
             services.AddSingleton(store);
-
             services.AddScoped(sp => sp.GetRequiredService<IDocumentStore>().OpenAsyncSession());
+
+            IndexCreation.CreateIndexes(typeof(AllDocumentsIndex).Assembly, store);
         }
     }
 }

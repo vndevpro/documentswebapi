@@ -3,7 +3,7 @@ using Rabbit.Documents.Application.Queries;
 using Rabbit.Documents.Application.ViewModels;
 using Rabbit.Documents.Domain.Repositories;
 
-namespace Rabbit.Documents.Application.Handlers
+namespace Rabbit.Documents.Application.Handlers.Queries
 {
     public class GetDocumentByIdQueryHandler(IDocumentRepository documentRepository) : IRequestHandler<GetDocumentByIdQuery, DocumentViewModel>
     {

@@ -1,10 +1,9 @@
-﻿using GdNetDDD.Common;
-using MediatR;
+﻿using MediatR;
 using Rabbit.Documents.Application.Queries;
 using Rabbit.Documents.Application.ViewModels;
 using Rabbit.Documents.Domain.Repositories;
 
-namespace Rabbit.Documents.Application.Handlers
+namespace Rabbit.Documents.Application.Handlers.Queries
 {
     public class GetDocumentsQueryHandler(IDocumentRepository documentRepository) : IRequestHandler<GetDocumentsQuery, PaginatedResult<DocumentViewModel>>
     {
@@ -14,7 +13,7 @@ namespace Rabbit.Documents.Application.Handlers
 
             var documents = result.Items.Select(x => x.MapToViewModel()).ToList();
 
-            return PaginatedResult<DocumentViewModel>.Create(documents, result.TotalCount, result.PageNumber, result.PageSize);
+            return PaginatedResult.Create(documents, result.TotalCount, result.PageNumber, result.PageSize);
         }
     }
 }

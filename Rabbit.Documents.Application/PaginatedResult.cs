@@ -1,18 +1,21 @@
-﻿namespace GdNetDDD.Common
+﻿namespace Rabbit.Documents.Application
 {
-    public class PaginatedResult<T>
+    public class PaginatedResult<T> : PaginatedResult
     {
         public required IReadOnlyCollection<T> Items { get; init; }
+    }
 
-        public int PageNumber { get; private set; }
+    public abstract class PaginatedResult
+    {
+        public int PageNumber { get; init; }
 
-        public int TotalPages { get; private set; }
+        public int TotalPages { get; init; }
 
-        public int PageSize { get; private set; }
+        public int PageSize { get; init; }
 
-        public long TotalCount { get; private set; }
+        public long TotalCount { get; init; }
 
-        public static PaginatedResult<T> Create(IList<T> items, long totalCount, int pageNumber, int pageSize)
+        public static PaginatedResult<T> Create<T>(IList<T> items, long totalCount, int pageNumber, int pageSize)
         {
             var result = new PaginatedResult<T>
             {

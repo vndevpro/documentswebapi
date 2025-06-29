@@ -5,7 +5,7 @@ namespace GdNetValidations
     /// <summary>
     /// For APIs that support pagination. Example when using in minimal api MapGet: [AsParameters] PaginationInputModel model
     /// </summary>
-    public class PaginationInputModel : IValidationRequired
+    public class PaginationQueryModel : IValidationRequired
     {
         [Range(0, int.MaxValue)]
         public int? PageNumber { get; set; }

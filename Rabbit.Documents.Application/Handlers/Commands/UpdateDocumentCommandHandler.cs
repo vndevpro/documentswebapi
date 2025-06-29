@@ -4,7 +4,7 @@ using Rabbit.Documents.Application.Extensions;
 using Rabbit.Documents.Application.ViewModels;
 using Rabbit.Documents.Domain.Repositories;
 
-namespace Rabbit.Documents.Application.Handlers
+namespace Rabbit.Documents.Application.Handlers.Commands
 {
     public class UpdateDocumentCommandHandler(IDocumentRepository documentRepository) : IRequestHandler<UpdateDocumentCommand, DocumentViewModel>
     {
