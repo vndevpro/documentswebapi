@@ -1,6 +1,5 @@
 ﻿using GdNetDDD.Common;
 using GdNetDDD.Entities;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GdNetDDD.Repositories
@@ -23,9 +22,9 @@ namespace GdNetDDD.Repositories
             DeleteAsync(id).GetAwaiter().GetResult();
         }
 
-        public virtual IEnumerable<TAggregate> GetAll(int? page, int? pageSize)
+        public virtual long CountAll()
         {
-            return GetAllAsync(page, pageSize).GetAwaiter().GetResult();
+            return CountAllAsync().GetAwaiter().GetResult();
         }
 
         public virtual TAggregate GetById(TId id)
@@ -42,7 +41,7 @@ namespace GdNetDDD.Repositories
 
         public abstract Task DeleteAsync(TId id);
 
-        public abstract Task<IEnumerable<TAggregate>> GetAllAsync(int? page, int? pageSize);
+        public abstract Task<long> CountAllAsync();
 
         public abstract Task<TAggregate> GetByIdAsync(TId id);
 

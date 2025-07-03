@@ -1,6 +1,5 @@
 ﻿using GdNetDDD.Common;
 using GdNetDDD.Entities;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GdNetDDD.Repositories
@@ -13,7 +12,7 @@ namespace GdNetDDD.Repositories
 
         Task<TAggregate> GetByIdAsync(TId id);
 
-        Task<IEnumerable<TAggregate>> GetAllAsync(int? page, int? pageSize);
+        Task<long> CountAllAsync();
 
         Task<PaginatedList<TAggregate>> GetListAsync(int? page, int? pageSize);
     }

@@ -3,16 +3,16 @@ using Raven.Client.Documents.Indexes;
 
 namespace Rabbit.Documents.DataRavenDb.Indexes
 {
-    public sealed class AllDocumentsIndex : AbstractIndexCreationTask<Document>
+    public sealed class SearchableDocumentsIndex : AbstractIndexCreationTask<Document>
     {
-        public AllDocumentsIndex()
+        public SearchableDocumentsIndex()
         {
             Map = documents => from document in documents
                                select new
                                {
                                    document.Id,
                                    document.Title,
-                                   document.Description,
+                                   document.Description
                                };
 
             Index(x => x.Title, FieldIndexing.Search);

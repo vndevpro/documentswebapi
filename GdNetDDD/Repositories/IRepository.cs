@@ -1,6 +1,5 @@
 ﻿using GdNetDDD.Common;
 using GdNetDDD.Entities;
-using System.Collections.Generic;
 
 namespace GdNetDDD.Repositories
 {
@@ -12,7 +11,7 @@ namespace GdNetDDD.Repositories
 
         TAggregate GetById(TId id);
 
-        IEnumerable<TAggregate> GetAll(int? page, int? pageSize);
+        long CountAll();
 
         PaginatedList<TAggregate> GetList(int? page, int? pageSize);
     }

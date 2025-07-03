@@ -1,5 +1,4 @@
-﻿using GdNetValidations;
-using MediatR;
+﻿using MediatR;
 using Rabbit.Documents.Application.Commands;
 using Rabbit.Documents.Application.InputModels;
 using Rabbit.Documents.Application.Queries;
@@ -35,9 +34,15 @@ namespace Rabbit.Documents.Http.Endpoints
                 return Results.Ok(document);
             });
 
-            routeBuilder.MapGet("/documents/search", async (IMediator mediator, [AsParameters] SearchQueryModel model) =>
+            routeBuilder.MapGet("/documents/search", async (IMediator mediator, [AsParameters] GenericSearchQueryModel model) =>
             {
-                var documents = await mediator.Send(new SearchDocumentsQuery { InputModel = model });
+                var documents = await mediator.Send(new GenericSearchDocumentsQuery { InputModel = model });
+                return Results.Ok(documents);
+            });
+
+            routeBuilder.MapGet("/documents/advancedsearch", async (IMediator mediator, [AsParameters] AdvancedSearchQueryModel model) =>
+            {
+                var documents = await mediator.Send(new AdvancedSearchDocumentsQuery { InputModel = model });
                 return Results.Ok(documents);
             });
         }

@@ -23,7 +23,7 @@ namespace Rabbit.Documents.Infrastructure.Configurations
             services.AddSingleton(store);
             services.AddScoped(sp => sp.GetRequiredService<IDocumentStore>().OpenAsyncSession());
 
-            IndexCreation.CreateIndexes(typeof(AllDocumentsIndex).Assembly, store);
+            IndexCreation.CreateIndexes(typeof(SearchableDocumentsIndex).Assembly, store);
         }
     }
 }

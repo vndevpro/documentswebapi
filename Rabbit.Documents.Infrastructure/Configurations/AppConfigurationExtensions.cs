@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Rabbit.Documents.DataRavenDb.Repositories;
 using Rabbit.Documents.Domain.Repositories;
-using Rabbit.Documents.RavenDbData;
 
 namespace Rabbit.Documents.Infrastructure.Configurations
 {

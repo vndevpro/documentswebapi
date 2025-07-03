@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using GdNetValidations;
+using System.ComponentModel.DataAnnotations;
 
-namespace GdNetValidations
+namespace Rabbit.Documents.Application.InputModels
 {
     /// <summary>
     /// For APIs that support pagination. Example when using in minimal api MapGet: [AsParameters] PaginationInputModel model

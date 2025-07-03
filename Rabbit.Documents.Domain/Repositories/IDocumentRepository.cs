@@ -6,6 +6,8 @@ namespace Rabbit.Documents.Domain.Repositories
 {
     public interface IDocumentRepository : IRepositoryAsync<Document, string>, IRepository<Document, string>
     {
-        Task<PaginatedList<Document>> Search(string searchTerms, int? page, int? pageSize);
+        Task<PaginatedList<Document>> SearchAsync(string searchTerms, int? page, int? pageSize);
+
+        Task<PaginatedList<Document>> SearchAsync(IDictionary<DocumentSearchableField, string> searchFields, int? page, int? pageSize);
     }
 }

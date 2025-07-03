@@ -1,5 +1,5 @@
-﻿using GdNetValidations;
-using MediatR;
+﻿using MediatR;
+using Rabbit.Documents.Application.InputModels;
 using Rabbit.Documents.Application.ViewModels;
 
 namespace Rabbit.Documents.Application.Queries

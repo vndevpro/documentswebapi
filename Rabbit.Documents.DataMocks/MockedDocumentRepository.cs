@@ -46,9 +46,9 @@ namespace Rabbit.Documents.DataMocks
             return Task.FromResult(document);
         }
 
-        public override Task<IEnumerable<Document>> GetAllAsync(int? page, int? pageSize)
+        public override Task<long> CountAllAsync()
         {
-            return Task.FromResult(_documents.AsEnumerable());
+            return Task.FromResult((long)_documents.Count);
         }
 
         public override Task<PaginatedList<Document>> GetListAsync(int? page, int? pageSize)
@@ -64,20 +64,38 @@ namespace Rabbit.Documents.DataMocks
             return Task.FromResult(pl);
         }
 
-        public Task<PaginatedList<Document>> Search(string searchTerms, int? page, int? pageSize)
+        public Task<PaginatedList<Document>> SearchAsync(string searchTerms, int? page, int? pageSize)
         {
             var aPage = page.GetValueOrDefault(0);
             var aPageSize = pageSize.GetValueOrDefault(10);
 
-            var pagedDocuments = _documents
-                .Where(x => x.Title.Contains(searchTerms)
-                            || (x.Description ?? string.Empty).Contains(searchTerms))
-                .Skip(aPage * aPageSize)
-                .Take(aPageSize)
-                .ToList();
-            var pl = PaginatedList<Document>.Create(pagedDocuments, _documents.Count, aPage, aPageSize);
+            var query = _documents.Where(x => x.Title.Contains(searchTerms) || (x.Description ?? string.Empty).Contains(searchTerms));
+            var pl = query.GetPaginatedList(aPage, aPageSize);
 
             return Task.FromResult(pl);
+        }
+
+        public Task<PaginatedList<Document>> SearchAsync(IDictionary<DocumentSearchableField, string> searchFields, int? page, int? pageSize)
+        {
+            var pl = GetSearchableQuery().GetPaginatedList(page, pageSize);
+            return Task.FromResult(pl);
+
+            IEnumerable<Document> GetSearchableQuery()
+            {
+                var query = _documents.AsEnumerable();
+
+                foreach (var searchField in searchFields)
+                {
+                    return searchField.Key switch
+                    {
+                        DocumentSearchableField.Title => query = query.Where(x => x.Title.Contains(searchField.Value)),
+                        DocumentSearchableField.Description => query = query.Where(x => (x.Description ?? string.Empty).Contains(searchField.Value)),
+                        _ => throw new NotImplementedException($"Not implemented for the searchable field {searchField.Key}."),
+                    };
+                }
+
+                return query;
+            }
         }
 
         private void CreateSampleDocuments()
