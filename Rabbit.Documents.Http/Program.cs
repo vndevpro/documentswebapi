@@ -13,7 +13,7 @@ namespace Rabbit.Documents.Http
             builder.Services.AddAuthorization();
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
+            builder.Services.ConfigOpenApi();
 
             // Create and configure the document store
             builder.Services.ConfigRavenDb(builder.Configuration);
@@ -26,7 +26,7 @@ namespace Rabbit.Documents.Http
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.MapOpenApi();
+                app.UseOpenApiUI();
             }
 
             app.UseHttpsRedirection();

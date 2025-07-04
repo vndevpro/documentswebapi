@@ -3,7 +3,7 @@ using Rabbit.Documents.Application;
 
 namespace Rabbit.Documents.Infrastructure.Configurations
 {
-    public static class MediatorExtensions
+    public static class MediatorConfigurationHelper
     {
         public static void ConfigMediatR(this IServiceCollection services)
         {

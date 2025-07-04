@@ -22,14 +22,14 @@ namespace Rabbit.Documents.Application.Handlers.Queries
         {
             var searchableFields = new Dictionary<DocumentSearchableField, string>();
 
-            if (!string.IsNullOrWhiteSpace(searchQueryModel.TitleSearchText))
+            if (!string.IsNullOrWhiteSpace(searchQueryModel.TitleTerms))
             {
-                searchableFields.Add(DocumentSearchableField.Title, searchQueryModel.TitleSearchText);
+                searchableFields.Add(DocumentSearchableField.Title, searchQueryModel.TitleTerms);
             }
 
-            if (!string.IsNullOrWhiteSpace(searchQueryModel.DescriptionSearchText))
+            if (!string.IsNullOrWhiteSpace(searchQueryModel.DescriptionTerms))
             {
-                searchableFields.Add(DocumentSearchableField.Description, searchQueryModel.DescriptionSearchText);
+                searchableFields.Add(DocumentSearchableField.Description, searchQueryModel.DescriptionTerms);
             }
 
             return searchableFields;

@@ -1,12 +1,15 @@
 ﻿using GdNetValidations.CustomAttributes;
+using System.ComponentModel;
 
 namespace Rabbit.Documents.Application.InputModels
 {
-    [AtLeastOneRequired(nameof(TitleSearchText), nameof(DescriptionSearchText))]
+    [AtLeastOneRequired(nameof(TitleTerms), nameof(DescriptionTerms))]
     public sealed class AdvancedSearchQueryModel : PaginationQueryModel
     {
-        public string? TitleSearchText { get; set; }
+        [Description("Terms to search in document title.")]
+        public string? TitleTerms { get; set; }
 
-        public string? DescriptionSearchText { get; set; }
+        [Description("Terms to search in document description.")]
+        public string? DescriptionTerms { get; set; }
     }
 }

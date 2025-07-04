@@ -4,7 +4,7 @@ using Rabbit.Documents.Domain.Repositories;
 
 namespace Rabbit.Documents.Infrastructure.Configurations
 {
-    public static class AppConfigurationExtensions
+    public static class ApplicationServicesConfigurationHelper
     {
         public static void ConfigApplicationServices(this IServiceCollection services)
         {
