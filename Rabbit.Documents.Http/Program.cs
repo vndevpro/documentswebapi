@@ -33,7 +33,7 @@ namespace Rabbit.Documents.Http
 
             app.UseAuthorization();
 
-            app.MapApiV1Endpoints();
+            app.MapApiEndpoints();
 
             app.Run();
         }

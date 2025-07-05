@@ -1,6 +1,7 @@
 ﻿using GdNetValidations;
+using Microsoft.AspNetCore.Http;
 
-namespace Rabbit.Documents.Http.Validations
+namespace Rabbit.Documents.Infrastructure.Validations
 {
     public class DataAnnotationsValidationFilter : IEndpointFilter
     {

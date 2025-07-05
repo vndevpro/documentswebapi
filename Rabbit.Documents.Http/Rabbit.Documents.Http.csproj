@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Rabbit.Documents.Application\Rabbit.Documents.Application.csproj" />
     <ProjectReference Include="..\Rabbit.Documents.Infrastructure\Rabbit.Documents.Infrastructure.csproj" />
   </ItemGroup>
 
