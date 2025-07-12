@@ -10,17 +10,20 @@ namespace Rabbit.Documents.Domain.Entities
 
         public string? Description { get; set; }
 
+        public required string CreatedBy { get; set; }
+
         public DateTime CreatedAt { get; init; }
 
         public DateTime UpdatedAt { get; set; }
 
-        public static Document Create(string title, string? description)
+        public static Document Create(string creatorId, string title, string? description)
         {
             return new Document
             {
                 Id = Guid.NewGuid().ToString(),
                 Title = title,
                 Description = description,
+                CreatedBy = creatorId,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             };

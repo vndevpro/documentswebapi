@@ -1,0 +1,9 @@
+﻿namespace Rabbit.Documents.DataRavenDb.Extensions
+{
+    public sealed class QueryCustomization
+    {
+        public bool NoTracking { get; set; } = true;
+
+        public bool NoCaching { get; set; } = true;
+    }
+}

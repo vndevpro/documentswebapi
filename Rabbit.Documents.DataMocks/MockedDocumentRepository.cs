@@ -104,6 +104,7 @@ namespace Rabbit.Documents.DataMocks
                             new Document
                             {
                                 Id = Guid.NewGuid().ToString(),
+                                CreatedBy = Guid.NewGuid().ToString(),
                                 Title = "Document 1",
                                 Description = "Description 1",
                                 CreatedAt = DateTime.UtcNow,
@@ -112,6 +113,7 @@ namespace Rabbit.Documents.DataMocks
                             new Document
                             {
                                 Id = Guid.NewGuid().ToString(),
+                                CreatedBy = Guid.NewGuid().ToString(),
                                 Title = "Document 2",
                                 Description = "Description 2",
                                 CreatedAt = DateTime.UtcNow,

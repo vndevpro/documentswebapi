@@ -9,6 +9,8 @@ namespace Rabbit.Documents.Http
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddHttpContextAccessor();
+
             // Add services to the container.
             builder.Services.AddAuthorization();
 
@@ -17,6 +19,8 @@ namespace Rabbit.Documents.Http
 
             // Create and configure the document store
             builder.Services.ConfigRavenDb();
+
+            builder.Services.ConfigureRavenDbIdentity();
 
             // Configure application services
             builder.Services.ConfigApplicationServices();
@@ -34,6 +38,8 @@ namespace Rabbit.Documents.Http
             app.UseAuthorization();
 
             app.MapApiV1Endpoints();
+
+            app.MapUsersEndpoints();
 
             app.CreateRavenDbIndexes();
 

@@ -2,6 +2,7 @@
 using GdNetDDD.Entities;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Linq;
+using Raven.Client.Documents.Session;
 
 namespace Rabbit.Documents.DataRavenDb.Extensions
 {
@@ -15,17 +16,37 @@ namespace Rabbit.Documents.DataRavenDb.Extensions
         /// <param name="page">Page number, default to 0</param>
         /// <param name="pageSize">Page size, default to 10</param>
         /// <returns>A paginated list from whole source</returns>
-        public static async Task<PaginatedList<T>> GetPaginatedList<T>(this IRavenQueryable<T> query, int? page, int? pageSize) where T : IEntity
+        public static async Task<PaginatedList<T>> GetPaginatedList<T>(this IRavenQueryable<T> query, int? page, int? pageSize, QueryCustomization? options = default) where T : IEntity
         {
             var aPage = page.GetValueOrDefault(0);
             var aPageSize = pageSize.GetValueOrDefault(10);
 
             var items = await query.Statistics(out var stats)
+                .Customize(CustomizeQuery())
                 .Skip(aPage * aPageSize)
                 .Take(aPageSize)
                 .ToListAsync();
 
             return PaginatedList<T>.Create(items, stats.TotalResults, aPage, aPageSize);
+
+            Action<IDocumentQueryCustomization> CustomizeQuery()
+            {
+                return c =>
+                    {
+                        if (options == null)
+                        {
+                            return;
+                        }
+                        if (options.NoTracking)
+                        {
+                            c.NoTracking();
+                        }
+                        if (options.NoCaching)
+                        {
+                            c.NoCaching();
+                        }
+                    };
+            }
         }
     }
 }

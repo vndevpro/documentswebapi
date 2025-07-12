@@ -12,7 +12,9 @@ namespace Rabbit.Documents.Http.Endpoints
     {
         public static void MapDocumentsEndpoints(this IEndpointRouteBuilder routeBuilder)
         {
-            routeBuilder.MapGet("/documents",
+            var builder = routeBuilder.MapGroup("/documents").WithTags(ApiDocumentations.Tags.Documents);
+
+            builder.MapGet("/",
                 async (IMediator mediator, [AsParameters] PaginationQueryModel model) =>
                 {
                     var documents = await mediator.Send(new GetDocumentsQuery { InputModel = model });
@@ -20,10 +22,9 @@ namespace Rabbit.Documents.Http.Endpoints
                 })
                 .WithSummary("Get a page of documents")
                 .WithDescription("Returns documents paginated by page size and page number")
-                .WithTags(ApiDocumentations.Tags.Documents)
                 .Produces<PaginatedResult<DocumentViewModel>>();
 
-            routeBuilder.MapGet("/documents/{id:guid}",
+            builder.MapGet("/{id:guid}",
                 async (IMediator mediator, Guid id) =>
                 {
                     var document = await mediator.Send(new GetDocumentByIdQuery { Id = id });
@@ -31,11 +32,10 @@ namespace Rabbit.Documents.Http.Endpoints
                 })
                 .WithSummary("Get a document by its ID")
                 .WithDescription("Return detail of a document")
-                .WithTags(ApiDocumentations.Tags.Documents)
                 .Produces<DocumentViewModel>()
                 .ProducesProblem((int)HttpStatusCode.NotFound);
 
-            routeBuilder.MapPost("/documents",
+            builder.MapPost("/",
                 async (IMediator mediator, HttpContext context, CreateDocumentInputModel model) =>
                 {
                     var document = await mediator.Send(new CreateDocumentCommand { InputModel = model });
@@ -44,11 +44,11 @@ namespace Rabbit.Documents.Http.Endpoints
                 })
                 .WithSummary("Create a document")
                 .WithDescription("Creates then returns detail of the new document")
-                .WithTags(ApiDocumentations.Tags.Documents)
                 .Produces<DocumentViewModel>()
-                .ProducesProblem((int)HttpStatusCode.BadRequest);
+                .ProducesProblem((int)HttpStatusCode.BadRequest)
+                .RequireAuthorization();
 
-            routeBuilder.MapPatch("/documents/{id:guid}",
+            builder.MapPatch("/{id:guid}",
                 async (IMediator mediator, Guid id, UpdateDocumentInputModel model) =>
                 {
                     var document = await mediator.Send(new UpdateDocumentCommand(id, model));
@@ -56,11 +56,10 @@ namespace Rabbit.Documents.Http.Endpoints
                 })
                 .WithSummary("Update an existing document")
                 .WithDescription("Updates then returns detail of the document")
-                .WithTags(ApiDocumentations.Tags.Documents)
                 .Produces<DocumentViewModel>()
                 .ProducesProblem((int)HttpStatusCode.NotFound);
 
-            routeBuilder.MapGet("/documents/search",
+            builder.MapGet("/search",
                 async (IMediator mediator, [AsParameters] GenericSearchQueryModel model) =>
                 {
                     var documents = await mediator.Send(new GenericSearchDocumentsQuery { InputModel = model });
@@ -68,10 +67,9 @@ namespace Rabbit.Documents.Http.Endpoints
                 })
                 .WithSummary("Search for documents by all possible fields")
                 .WithDescription("Search then returns a page of documents matched with the input")
-                .WithTags(ApiDocumentations.Tags.Documents)
                 .Produces<PaginatedResult<DocumentViewModel>>();
 
-            routeBuilder.MapGet("/documents/advancedsearch",
+            builder.MapGet("/advancedsearch",
                 async (IMediator mediator, [AsParameters] AdvancedSearchQueryModel model) =>
                 {
                     var documents = await mediator.Send(new AdvancedSearchDocumentsQuery { InputModel = model });
@@ -79,7 +77,6 @@ namespace Rabbit.Documents.Http.Endpoints
                 })
                 .WithSummary("Search for documents in advanced mode")
                 .WithDescription("Search in exact mode then returns a page of matched documents")
-                .WithTags(ApiDocumentations.Tags.Documents)
                 .Produces<PaginatedResult<DocumentViewModel>>();
         }
     }
