@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Rabbit.Documents.Infrastructure.Configurations
+namespace GdNetDataStoreRavenDb
 {
     public static class ConfigurationExtensions
     {

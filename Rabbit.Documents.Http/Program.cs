@@ -35,6 +35,8 @@ namespace Rabbit.Documents.Http
 
             app.MapApiV1Endpoints();
 
+            app.CreateRavenDbIndexes();
+
             app.Run();
         }
     }
