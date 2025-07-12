@@ -16,7 +16,7 @@ namespace Rabbit.Documents.Http
             builder.Services.ConfigOpenApi();
 
             // Create and configure the document store
-            builder.Services.ConfigRavenDb(builder.Configuration);
+            builder.Services.ConfigRavenDb();
 
             // Configure application services
             builder.Services.ConfigApplicationServices();

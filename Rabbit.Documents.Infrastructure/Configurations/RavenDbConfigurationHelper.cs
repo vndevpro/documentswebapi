@@ -1,29 +1,22 @@
-﻿using GdNetDataStoreRavenDb;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Rabbit.Documents.DataRavenDb.Indexes;
-using Raven.Client.Documents;
 using Raven.Client.Documents.Indexes;
+using Raven.DependencyInjection;
 
 namespace Rabbit.Documents.Infrastructure.Configurations
 {
     public static class RavenDbConfigurationHelper
     {
-        public static void ConfigRavenDb(this IServiceCollection services, IConfiguration configuration, string configSectionName = "RavenDbSettings")
+        public static void ConfigRavenDb(this IServiceCollection services)
         {
-            var dbSettings = configuration.GetSection<RavenDbSettings>(configSectionName);
-
-            services.ConfigRavenDb(dbSettings);
-        }
-
-        public static void ConfigRavenDb(this IServiceCollection services, RavenDbSettings settings)
-        {
-            var store = DocumentStoreFactory.CreateStore(settings);
-
-            services.AddSingleton(store);
-            services.AddScoped(sp => sp.GetRequiredService<IDocumentStore>().OpenAsyncSession());
-
-            IndexCreation.CreateIndexes(typeof(SearchableDocumentsIndex).Assembly, store);
+            services.AddRavenDbDocStore(option =>
+                {
+                    option.AfterInitializeDocStore = store =>
+                    {
+                        IndexCreation.CreateIndexes(typeof(SearchableDocumentsIndex).Assembly, store);
+                    };
+                })
+                .AddRavenDbAsyncSession();
         }
     }
 }

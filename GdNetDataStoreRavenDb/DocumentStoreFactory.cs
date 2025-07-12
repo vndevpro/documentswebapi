@@ -9,9 +9,9 @@ namespace GdNetDataStoreRavenDb
         /// Creates and initializes a new instance of IDocumentStore.
         /// </summary>
         /// <returns>An initialized IDocumentStore instance.</returns>
-        public static IDocumentStore CreateStore(RavenDbSettings dbSettings)
+        public static IDocumentStore CreateStore(RavenSettings dbSettings)
         {
-            var certificate = new X509Certificate2(dbSettings.CertificatePath);
+            var certificate = new X509Certificate2(dbSettings.CertFilePath);
 
             IDocumentStore store = new DocumentStore()
             {
@@ -27,7 +27,7 @@ namespace GdNetDataStoreRavenDb
                 },
 
                 // Define a default database (optional)
-                Database = dbSettings.Database,
+                Database = dbSettings.DatabaseName,
 
                 // Define a client certificate (optional)
                 Certificate = certificate,
